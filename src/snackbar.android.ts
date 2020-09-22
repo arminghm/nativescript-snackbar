@@ -28,15 +28,18 @@ export class SnackBar {
   private _snackbar: any;
   // Use this to get the textview instance inside the snackbar
   private SNACKBAR_TEXT_ID;
+  private SNACKBAR_ACTION_TEXT_ID;
 
   constructor() {
     this.SNACKBAR_TEXT_ID = getComponentR('id', 'snackbar_text');
+    this.SNACKBAR_ACTION_TEXT_ID = getComponentR('id', 'snackbar_action');
   }
 
   // TODO: use an object for the options
   public simple(
     snackText: string,
     textColor?: string,
+    fontFamily?: string,
     backgroundColor?: string,
     maxLines?: number,
     isRTL?: boolean,
@@ -90,6 +93,16 @@ export class SnackBar {
             this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
           tv.setMaxLines(maxLines);
+        }
+
+        if (fontFamily) {
+          const sbView = this._snackbar.getView();
+          const tv = sbView.findViewById(
+            this.SNACKBAR_TEXT_ID
+          ) as android.widget.TextView;
+          const assets = activity.getAssets();
+          var typeFace = 	android.graphics.Typeface.createFromAsset(assets, 'app/fonts/' + fontFamily + '.ttf');
+          tv.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
         }
 
         // set RTL for snackbar
@@ -170,6 +183,20 @@ export class SnackBar {
             this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
           tv.setMaxLines(options.maxLines);
+        }
+
+        if (options.fontFamily) {
+          const sbView = this._snackbar.getView();
+          const tv = sbView.findViewById(
+            this.SNACKBAR_TEXT_ID
+          ) as android.widget.TextView;
+          const actionTV = sbView.findViewById(
+            this.SNACKBAR_ACTION_TEXT_ID
+          ) as android.widget.TextView;
+          const assets = activity.getAssets();
+          var typeFace = 	android.graphics.Typeface.createFromAsset(assets, 'app/fonts/' + options.fontFamily + '.ttf');
+          tv.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
+          actionTV.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
         }
 
         // set RTL for snackbar

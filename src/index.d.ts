@@ -15,6 +15,7 @@ export declare class SnackBar {
   simple(
     snackText: string,
     textColor?: string,
+    fontFamily?: string,
     backgroundColor?: string,
     maxLines?: number,
     isRTL?: boolean,
@@ -42,6 +43,11 @@ export interface SnackBarOptions {
    * The text of the snackbar.
    */
   snackText: string;
+
+  /**
+   * The font family of snackText
+   */
+  fontFamily: string;
 
   /**
    * Delay to hide the snackbar.
