@@ -12,6 +12,11 @@ export interface SnackBarOptions {
   snackText: string;
 
   /**
+   * Font family of snackText and actionText.
+   */
+  fontFamily?: string;
+
+  /**
    * Delay to hide the snackbar.
    */
   hideDelay: number;

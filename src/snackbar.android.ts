@@ -12,6 +12,9 @@ const Snackbar_Namespace = useAndroidX()
 const SNACKBAR_TEXT_ID = useAndroidX()
   ? (com.google.android.material as any).R.id.snackbar_text
   : (android.support as any).design.R.id.snackbar_text;
+const SMACKBAR_ACTION_TEXT_ID = useAndroidX()
+  ? (com.google.android.material as any).R.id.snackbar_action
+  : (android.support as any).design.R.id.snackbar_action;
 
 function useAndroidX() {
   return (
@@ -31,6 +34,7 @@ export class SnackBar {
   public simple(
     snackText: string,
     textColor?: string,
+    fontFamily?: string,
     backgroundColor?: string,
     maxLines?: number,
     isRTL?: boolean,
@@ -92,6 +96,14 @@ export class SnackBar {
           ) as android.widget.TextView;
 
           tv.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
+        }
+
+        if (fontFamily) {
+          const sbView = this._snackbar.getView();
+          const tv = sbView.findViewById(SNACKBAR_TEXT_ID);
+          const assets = activity.getAssets();
+          const typeFace = 	android.graphics.Typeface.createFromAsset(assets, 'app/fonts/' + fontFamily + '.ttf');
+          tv.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
         }
 
         this._snackbar.show();
@@ -175,6 +187,16 @@ export class SnackBar {
           ) as android.widget.TextView;
 
           tv.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
+        }
+
+        if (options.fontFamily) {
+          const sbView = this._snackbar.getView();
+          const tv = sbView.findViewById(SNACKBAR_TEXT_ID);
+          const actionTV = sbView.findViewById(SMACKBAR_ACTION_TEXT_ID);
+          const assets = activity.getAssets();
+          const typeFace = 	android.graphics.Typeface.createFromAsset(assets, 'app/fonts/' + options.fontFamily + '.ttf');
+          tv.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
+          actionTV.setTypeface(typeFace, android.graphics.Typeface.NORMAL);
         }
 
         const cb = new TNS_SnackbarBaseCallback(new WeakRef(this));
